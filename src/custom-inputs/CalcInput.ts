@@ -13,7 +13,6 @@ export class CalcInput extends BaseInput {
         super(parent);
         if (this._hostElement) {
             this.createContent(this._hostElement);
-//            this.bindHandlers();
             this.rpn = new RPN();
         }
     }
@@ -75,7 +74,7 @@ export class CalcInput extends BaseInput {
         return value;
     }
 
-    private displayValue = (value: Value): void => {
+    private displayValue(value: Value): void {
         const content = value || value === 0 ? value.toString() : (value === undefined ? '?' : '\u00A0');
         this._valueElement!.textContent = content;
     }

@@ -37,7 +37,7 @@ export declare abstract class BaseInput implements ICustomInput {
     protected parse(): void;
     protected abstract calcValue(): Value;
     protected abstract getBorderedElement(): HTMLElement;
-    protected updateBorderStyle: () => void;
+    protected updateBorderStyle(): void;
     /**
      * Widget read/only property
      *
@@ -64,9 +64,9 @@ export declare abstract class BaseInput implements ICustomInput {
      */
     abstract get value(): Value;
     abstract set value(val: Value);
-    protected onTextChanged: () => void;
-    protected onFocus: () => void;
-    protected onBlur: () => void;
+    protected onTextChanged(): void;
+    protected onFocus(): void;
+    protected onBlur(): void;
     /**
      * Add event listener
      * @param type {string}     type of the Event

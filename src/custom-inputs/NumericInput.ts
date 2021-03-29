@@ -13,7 +13,6 @@ export class NumericInput extends BaseInput {
         super(parent);
         if (this._hostElement) {
             this.createContent(this._hostElement);
-//            this.bindHandlers();
         }
     }
 
@@ -33,7 +32,7 @@ export class NumericInput extends BaseInput {
         hostElement.appendChild(this._inputElement);
     }
 
-    protected getBorderedElement = (): HTMLElement => {
+    protected getBorderedElement(): HTMLElement {
         return this._inputElement!;
     }
 

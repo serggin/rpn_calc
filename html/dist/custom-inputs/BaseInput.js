@@ -15,36 +15,6 @@ export class BaseInput {
         this._value = null;
         this._inputElement = null;
         this._focused = false;
-        this.updateBorderStyle = () => {
-            let borderClass;
-            if (this.isValid || this.text.length === 0) {
-                borderClass = this._focused ? BaseInput.FOCUS_CLASS : '';
-            }
-            else {
-                borderClass = this._focused ? BaseInput.FOCUS_INVALID_CLASS : BaseInput.INVALID_CLASS;
-            }
-            const borderedElement = this.getBorderedElement();
-            borderedElement.classList.remove(...BaseInput.BORDER_CLASSES);
-            if (borderClass.length) {
-                borderedElement.classList.add(borderClass);
-            }
-        };
-        this.onTextChanged = () => {
-            this.parse();
-            this._notifier.dispatch(new CustomEvent(BaseInput.TEXT_CHANGED, {
-                detail: this._inputElement.value,
-            }));
-        };
-        this.onFocus = () => {
-            //console.log('onFocus()', this);
-            //console.log('onFocus()', this, this.getBorderedElement());
-            this._focused = true;
-            this.updateBorderStyle();
-        };
-        this.onBlur = () => {
-            this._focused = false;
-            this.updateBorderStyle();
-        };
         if (typeof parent === 'string') {
             this._hostElement = document.getElementById(parent);
         }
@@ -61,6 +31,9 @@ export class BaseInput {
         else {
             throw new Error('Invalid parent');
         }
+        this.onFocus = this.onFocus.bind(this);
+        this.onBlur = this.onBlur.bind(this);
+        this.onTextChanged = this.onTextChanged.bind(this);
     }
     /**
      * Parse the input text
@@ -81,6 +54,20 @@ export class BaseInput {
             }));
         }
         this.updateBorderStyle();
+    }
+    updateBorderStyle() {
+        let borderClass;
+        if (this.isValid || this.text.length === 0) {
+            borderClass = this._focused ? BaseInput.FOCUS_CLASS : '';
+        }
+        else {
+            borderClass = this._focused ? BaseInput.FOCUS_INVALID_CLASS : BaseInput.INVALID_CLASS;
+        }
+        const borderedElement = this.getBorderedElement();
+        borderedElement.classList.remove(...BaseInput.BORDER_CLASSES);
+        if (borderClass.length) {
+            borderedElement.classList.add(borderClass);
+        }
     }
     /**
      * Widget read/only property
@@ -111,6 +98,20 @@ export class BaseInput {
      */
     get isValid() {
         return this._value !== undefined && this._value !== null;
+    }
+    onTextChanged() {
+        this.parse();
+        this._notifier.dispatch(new CustomEvent(BaseInput.TEXT_CHANGED, {
+            detail: this._inputElement.value,
+        }));
+    }
+    onFocus() {
+        this._focused = true;
+        this.updateBorderStyle();
+    }
+    onBlur() {
+        this._focused = false;
+        this.updateBorderStyle();
     }
     /**
      * Add event listener

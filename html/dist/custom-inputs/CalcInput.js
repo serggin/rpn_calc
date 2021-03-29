@@ -12,13 +12,8 @@ export class CalcInput extends BaseInput {
         this.getBorderedElement = () => {
             return this.wrapperElement;
         };
-        this.displayValue = (value) => {
-            const content = value || value === 0 ? value.toString() : (value === undefined ? '?' : '\u00A0');
-            this._valueElement.textContent = content;
-        };
         if (this._hostElement) {
             this.createContent(this._hostElement);
-            //            this.bindHandlers();
             this.rpn = new RPN();
         }
     }
@@ -68,6 +63,10 @@ export class CalcInput extends BaseInput {
             }
         }
         return value;
+    }
+    displayValue(value) {
+        const content = value || value === 0 ? value.toString() : (value === undefined ? '?' : '\u00A0');
+        this._valueElement.textContent = content;
     }
     /**
      * Widget read/write property

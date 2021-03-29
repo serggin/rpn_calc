@@ -145,7 +145,7 @@ function updateNodeText(id: string, text: string): void {
 /**
  * FormulaGenerator & RPN demo
  */
-
+/*
 const formulaGenerator = new FormulaGenerator(3, 3, 10, 0);
 const rpn = new RPN();
 const total = 10;
@@ -167,4 +167,4 @@ console.log('================== Generated formulas test ended ==================
 const node = document.createTextNode(`${passed} of ${total}`);
 const resultElement = document.getElementById('result');
 resultElement!.appendChild(node);
-
+*/

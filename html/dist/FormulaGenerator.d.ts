@@ -24,7 +24,7 @@ export declare class FormulaGenerator {
     static readonly PARENTHESIS = 3;
     static readonly OPERATIONS: string[];
     constructor(maxOperands?: number, maxDepth?: number, maxNumber?: number, fixedDigits?: number);
-    generate: (depth?: number) => string;
+    generate(depth?: number): string;
     private generateNumber;
     private randomType;
     private generateInfixSign;

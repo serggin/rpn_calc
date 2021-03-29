@@ -10,12 +10,8 @@ export class NumericInput extends BaseInput {
      */
     constructor(parent) {
         super(parent);
-        this.getBorderedElement = () => {
-            return this._inputElement;
-        };
         if (this._hostElement) {
             this.createContent(this._hostElement);
-            //            this.bindHandlers();
         }
     }
     /**
@@ -32,6 +28,9 @@ export class NumericInput extends BaseInput {
         inputElement.onblur = this.onBlur;
         this._inputElement = inputElement;
         hostElement.appendChild(this._inputElement);
+    }
+    getBorderedElement() {
+        return this._inputElement;
     }
     calcValue() {
         if (this._inputElement.value.length === 0) {

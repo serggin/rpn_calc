@@ -50,6 +50,9 @@ export abstract class BaseInput implements ICustomInput{
         } else {
             throw new Error('Invalid parent');
         }
+        this.onFocus = this.onFocus.bind(this);
+        this.onBlur = this.onBlur.bind(this);
+        this.onTextChanged = this.onTextChanged.bind(this);
     }
 
     protected abstract createContent(hostElement: HTMLElement): void;
@@ -79,7 +82,7 @@ export abstract class BaseInput implements ICustomInput{
 
     protected abstract getBorderedElement(): HTMLElement;
 
-    protected updateBorderStyle = (): void => {
+    protected updateBorderStyle(): void {
         let borderClass: string;
         if (this.isValid || this.text.length === 0) {
             borderClass = this._focused ? BaseInput.FOCUS_CLASS : '';
@@ -134,20 +137,18 @@ export abstract class BaseInput implements ICustomInput{
     abstract get value(): Value;
     abstract set value(val: Value);
 
-    protected onTextChanged = (): void => {
+    protected onTextChanged(): void {
         this.parse();
         this._notifier!.dispatch(new CustomEvent(BaseInput.TEXT_CHANGED, {
             detail: this._inputElement!.value,
         }));
     }
 
-    protected onFocus = (): void => {
-        //console.log('onFocus()', this);
-        //console.log('onFocus()', this, this.getBorderedElement());
+    protected onFocus(): void {
         this._focused = true;
         this.updateBorderStyle();
     }
-    protected onBlur = (): void => {
+    protected onBlur(): void {
         this._focused = false;
         this.updateBorderStyle();
     }

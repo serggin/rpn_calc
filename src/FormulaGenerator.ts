@@ -28,7 +28,7 @@ export class FormulaGenerator {
     ) {
     }
 
-    generate = (depth: number = 0): string => {
+    generate(depth: number = 0): string {
         if (depth >= this.maxDepth) {
             return this.generateNumber();
         }
@@ -46,12 +46,12 @@ export class FormulaGenerator {
         return formula;
     }
 
-    private generateNumber = (): string => {
+    private generateNumber(): string {
         const random = Math.random();
         return (random * this.maxNumber).toFixed(this.fixedDigits);
     }
 
-    private randomType = (depth: number): number => {
+    private randomType(depth: number): number {
         const random = Math.random();
         const thresholds = depth === 0 ? FormulaGenerator.THRESHOLDS.depth0 : FormulaGenerator.THRESHOLDS.depth;
         if (random < thresholds.number) {
@@ -64,7 +64,7 @@ export class FormulaGenerator {
         }
     }
 
-    private generateInfixSign = (): string => {
+    private generateInfixSign(): string {
         const random = Math.random();
         if (random < .5) {
             return '-';
@@ -75,7 +75,7 @@ export class FormulaGenerator {
         return '';
     }
 
-    private generateArithmetic = (depth: number): string => {
+    private generateArithmetic(depth: number): string {
         const random = Math.random();
         const operands = 2 + Math.floor(random * (this.maxOperands - 1));
         let formula: string = (depth > 0 ? '(' : '') + this.generateInfixSign();
@@ -91,7 +91,7 @@ export class FormulaGenerator {
         return formula;
     }
 
-    private generateOperation = (): string => {
+    private generateOperation(): string {
         const random = Math.random();
         let index: number;
         if (random < .3) {
@@ -108,7 +108,7 @@ export class FormulaGenerator {
         return FormulaGenerator.OPERATIONS[index];
     }
 
-    private generateParenthesis = (depth:number): string => {
+    private generateParenthesis (depth:number): string {
         let formula = '(' + this.generateInfixSign() + this.generate(depth + 1) + ')';
         return formula;
     }
