@@ -8,8 +8,8 @@ try {
     customInputs.push(numInput);
 
     numInput.addEventListener('textChanged', function (text) {
-        console.log('*** NumericInput In listener: text=', text);
-        console.log('numInput .text, .value, .isValid = ', numInput.text, numInput.value, numInput.isValid);
+        //console.log('*** NumericInput In listener: text=', text);
+        //console.log('numInput .text, .value, .isValid = ', numInput.text, numInput.value, numInput.isValid);
         updateNodeText('numInputText', text);
     })
     numInput.addEventListener('valueChanged', function ({value}) {
@@ -57,8 +57,8 @@ try {
     customInputs.push(calcInput);
 
     calcInput.addEventListener('textChanged', function (text) {
-        console.log('*** CalcInput In listener: text=', text);
-        console.log('calcInput .text, .value, .isValid = ', calcInput.text, calcInput.value, calcInput.isValid);
+        //console.log('*** CalcInput In listener: text=', text);
+        //console.log('calcInput .text, .value, .isValid = ', calcInput.text, calcInput.value, calcInput.isValid);
         updateNodeText('calcInputText', text);
     })
     calcInput.addEventListener('valueChanged', function ({value}) {
@@ -145,7 +145,7 @@ function updateNodeText(id: string, text: string): void {
 /**
  * FormulaGenerator & RPN demo
  */
-/*
+
 const formulaGenerator = new FormulaGenerator(3, 3, 10, 0);
 const rpn = new RPN();
 const total = 10;
@@ -167,4 +167,4 @@ console.log('================== Generated formulas test ended ==================
 const node = document.createTextNode(`${passed} of ${total}`);
 const resultElement = document.getElementById('result');
 resultElement!.appendChild(node);
-*/
+

@@ -14,18 +14,18 @@ export declare class Notifier {
      * @param type {string}     type of the Event
      * @param listener {function(value)}    listener function
      */
-    addEventListener: (type: string, listener: Listener) => void;
+    addEventListener(type: string, listener: Listener): void;
     /**
      * Remove event listener
      * @param type {string}     type of the Event
      * @param listener {function(value)}    listener function
      */
-    removeEventListener: (type: string, listener: Listener) => void;
+    removeEventListener(type: string, listener: Listener): void;
     /**
      * Dispatch an Event
      * @param event {CustomEvent}   event object
      */
-    dispatch: (event: CustomEvent) => void;
+    dispatch(event: CustomEvent): void;
     /**
      * Free resources before destruction
      */

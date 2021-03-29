@@ -1,4 +1,1 @@
 export {};
-/**
- * FormulaGenerator & RPN demo
- */

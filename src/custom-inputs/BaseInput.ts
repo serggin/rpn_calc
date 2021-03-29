@@ -142,8 +142,8 @@ export abstract class BaseInput implements ICustomInput{
     }
 
     protected onFocus = (): void => {
-        console.log('onFocus()', this);
-        console.log('onFocus()', this, this.getBorderedElement());
+        //console.log('onFocus()', this);
+        //console.log('onFocus()', this, this.getBorderedElement());
         this._focused = true;
         this.updateBorderStyle();
     }

@@ -16,14 +16,14 @@
  */
 declare type Value = number | undefined;
 export declare class RPN {
-    static getOperatorFunction: (char: string) => (x: number, y: number) => number;
-    static getPriority: (char: string) => number;
+    static getOperatorFunction(char: string): ((x: number, y: number) => number);
+    static getPriority(char: string): number;
     static readonly numChars = ".0123456789";
     static readonly opChars = "-+*/()";
     static readonly binopChars = "-+*/";
-    static isNumChar: (char: string) => boolean;
-    static isOpChar: (char: string) => boolean;
-    static isBinOpChar: (char: string) => boolean;
+    static isNumChar(char: string): boolean;
+    static isOpChar(char: string): boolean;
+    static isBinOpChar(char: string): boolean;
     private stack;
     private out;
     private tokens;
@@ -43,7 +43,7 @@ export declare class RPN {
      *
      * @param text  formula
      */
-    change: (text: string) => void;
+    change(text: string): void;
     private parse;
     private getToken;
     private parseInfix;

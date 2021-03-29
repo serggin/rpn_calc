@@ -24,7 +24,7 @@ export class Notifier {
      * @param type {string}     type of the Event
      * @param listener {function(value)}    listener function
      */
-    addEventListener = (type: string, listener: Listener): void => {
+    addEventListener(type: string, listener: Listener): void {
         if (type in this._listeners) {
             this._listeners[type].push(listener);
         }
@@ -35,7 +35,7 @@ export class Notifier {
      * @param type {string}     type of the Event
      * @param listener {function(value)}    listener function
      */
-    removeEventListener = (type: string, listener: Listener): void => {
+    removeEventListener(type: string, listener: Listener): void {
         if (type in this._listeners) {
             const index = this._listeners[type].indexOf(listener);
             if (index > -1) {
@@ -48,7 +48,7 @@ export class Notifier {
      * Dispatch an Event
      * @param event {CustomEvent}   event object
      */
-    dispatch = (event: CustomEvent): void => {
+    dispatch(event: CustomEvent): void {
         const type = event.type;
         if (type in this._listeners) {
             this._listeners[type].forEach(listener => {

@@ -19,7 +19,7 @@ type Token = number | string;
 type Value = number | undefined
 
 export class RPN {
-    static getOperatorFunction = (char: string): ((x: number, y: number) => number) => {
+    static getOperatorFunction(char: string): ((x: number, y: number) => number) {
         switch (char) {
             case  '+':
                 return (x: number, y: number): number => x + y;
@@ -35,7 +35,7 @@ export class RPN {
         }
     }
 
-    static getPriority = (char: string): number => {
+    static getPriority(char: string): number {
        switch (char) {
            case '(':
            case ')':
@@ -58,11 +58,17 @@ export class RPN {
 
     static readonly binopChars = '-+*/';
 
-    static isNumChar = (char: string): boolean => char.length === 1 && RPN.numChars.indexOf(char) > -1;
+    static isNumChar(char: string): boolean {
+        return char.length === 1 && RPN.numChars.indexOf(char) > -1;
+    }
 
-    static isOpChar = (char: string): boolean => char.length === 1 && RPN.opChars.indexOf(char) > -1;
+    static isOpChar(char: string): boolean {
+        return char.length === 1 && RPN.opChars.indexOf(char) > -1;
+    }
 
-    static isBinOpChar = (char: string): boolean => char.length === 1 && RPN.binopChars.indexOf(char) > -1;
+    static isBinOpChar(char: string): boolean {
+        return char.length === 1 && RPN.binopChars.indexOf(char) > -1;
+    }
 
     private stack: Token[] = [];
     private out:  Token[] = [];
@@ -81,7 +87,7 @@ export class RPN {
         return this._value;
     }
 
-    private clear = (): void => {
+    private clear(): void {
         this.stack = [];
         this.out = [];
         this.error = false;
@@ -93,13 +99,13 @@ export class RPN {
      *
      * @param text  formula
      */
-    change = (text: string): void => {
+    change(text: string): void {
         this.clear();
         this.text = text;
         this.parse();
     }
 
-    private parse = (): void => {
+    private parse(): void {
         this._value = undefined;
         this.index = 0;
         let token: Token | false;
@@ -125,7 +131,7 @@ export class RPN {
         }
     }
 
-    private getToken = (): Token | false => {
+    private getToken(): Token | false {
         if (this.index > this.text.length - 1) {
             return false;
         }
@@ -175,7 +181,7 @@ export class RPN {
         }
     }
 
-    private parseInfix = (): void => {
+    private parseInfix(): void {
         let prevToken: Token | undefined = undefined;
         let token: Token;
 
@@ -239,7 +245,7 @@ export class RPN {
         }
     }
 
-    private calculate = (): void => {
+    private calculate(): void {
         this.stack = [];
         let token: Token;
         let operand1: number;

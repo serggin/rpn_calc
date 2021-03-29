@@ -1,12 +1,13 @@
-import { NumericInput, CalcInput } from "./custom-inputs/index.js";
+import { NumericInput, CalcInput, RPN } from "./custom-inputs/index.js";
+import { FormulaGenerator } from "./FormulaGenerator.js";
 const buttons = [];
 const customInputs = [];
 try {
     let numInput = new NumericInput('numInput');
     customInputs.push(numInput);
     numInput.addEventListener('textChanged', function (text) {
-        console.log('*** NumericInput In listener: text=', text);
-        console.log('numInput .text, .value, .isValid = ', numInput.text, numInput.value, numInput.isValid);
+        //console.log('*** NumericInput In listener: text=', text);
+        //console.log('numInput .text, .value, .isValid = ', numInput.text, numInput.value, numInput.isValid);
         updateNodeText('numInputText', text);
     });
     numInput.addEventListener('valueChanged', function ({ value }) {
@@ -52,8 +53,8 @@ try {
     let calcInput = new CalcInput('calcInput');
     customInputs.push(calcInput);
     calcInput.addEventListener('textChanged', function (text) {
-        console.log('*** CalcInput In listener: text=', text);
-        console.log('calcInput .text, .value, .isValid = ', calcInput.text, calcInput.value, calcInput.isValid);
+        //console.log('*** CalcInput In listener: text=', text);
+        //console.log('calcInput .text, .value, .isValid = ', calcInput.text, calcInput.value, calcInput.isValid);
         updateNodeText('calcInputText', text);
     });
     calcInput.addEventListener('valueChanged', function ({ value }) {
@@ -135,7 +136,6 @@ function updateNodeText(id, text) {
 /**
  * FormulaGenerator & RPN demo
  */
-/*
 const formulaGenerator = new FormulaGenerator(3, 3, 10, 0);
 const rpn = new RPN();
 const total = 10;
@@ -147,14 +147,14 @@ for (let i = 0; i < total; i += 1) {
     const value = rpn.value;
     const ev = eval(formula);
     if (ev === value) {
-        passed ++;
+        passed++;
         console.log(formula, value, ev);
-    } else {
+    }
+    else {
         console.error(formula, value, ev);
     }
 }
 console.log('================== Generated formulas test ended =======================');
 const node = document.createTextNode(`${passed} of ${total}`);
 const resultElement = document.getElementById('result');
-resultElement!.appendChild(node);
-*/
+resultElement.appendChild(node);
