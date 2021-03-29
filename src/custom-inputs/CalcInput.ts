@@ -13,6 +13,7 @@ export class CalcInput extends BaseInput {
         super(parent);
         if (this._hostElement) {
             this.createContent(this._hostElement);
+//            this.bindHandlers();
             this.rpn = new RPN();
         }
     }
@@ -21,7 +22,7 @@ export class CalcInput extends BaseInput {
      * Create Widget elements
      * @param hostElement {DOM element}
      */
-    protected createContent = (hostElement: HTMLElement): void => {
+    protected createContent (hostElement: HTMLElement): void {
         let wrapperElement = document.createElement("DIV") as HTMLElement;
         wrapperElement.className = 'calc-input-wrapper';
 
@@ -52,7 +53,15 @@ export class CalcInput extends BaseInput {
         return this.wrapperElement!;
     }
 
-    protected calcValue = (): Value => {
+    /**
+     * Parse the input text
+     */
+    protected parse(): void {
+        super.parse();
+        this.displayValue(this.value);
+    }
+
+    protected calcValue(): Value {
         let value: Value;
         if (this.text.length === 0) {
             value = null;
@@ -63,7 +72,6 @@ export class CalcInput extends BaseInput {
                 value = undefined;
             }
         }
-        this.displayValue(value);
         return value;
     }
 

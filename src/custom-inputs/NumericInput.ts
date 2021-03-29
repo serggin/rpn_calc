@@ -13,6 +13,7 @@ export class NumericInput extends BaseInput {
         super(parent);
         if (this._hostElement) {
             this.createContent(this._hostElement);
+//            this.bindHandlers();
         }
     }
 
@@ -20,7 +21,7 @@ export class NumericInput extends BaseInput {
      * Create Widget elements
      * @param hostElement {DOM element}
      */
-    protected createContent = (hostElement: HTMLElement): void => {
+    protected createContent(hostElement: HTMLElement): void {
         let inputElement = document.createElement("INPUT") as HTMLInputElement;
         inputElement.type = 'text';
         inputElement.placeholder = 'Number value';
@@ -36,7 +37,7 @@ export class NumericInput extends BaseInput {
         return this._inputElement!;
     }
 
-    protected calcValue = (): Value => {
+    protected calcValue (): Value{
         if (this._inputElement!.value.length === 0) {
             return null;
         }

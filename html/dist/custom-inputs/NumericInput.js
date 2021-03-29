@@ -10,37 +10,38 @@ export class NumericInput extends BaseInput {
      */
     constructor(parent) {
         super(parent);
-        /**
-         * Create Widget elements
-         * @param hostElement {DOM element}
-         */
-        this.createContent = (hostElement) => {
-            let inputElement = document.createElement("INPUT");
-            inputElement.type = 'text';
-            inputElement.placeholder = 'Number value';
-            inputElement.className = 'numeric-input';
-            inputElement.oninput = this.onTextChanged;
-            inputElement.onfocus = this.onFocus;
-            inputElement.onblur = this.onBlur;
-            this._inputElement = inputElement;
-            hostElement.appendChild(this._inputElement);
-        };
         this.getBorderedElement = () => {
             return this._inputElement;
         };
-        this.calcValue = () => {
-            if (this._inputElement.value.length === 0) {
-                return null;
-            }
-            let value = Number(this._inputElement.value);
-            if (Number.isNaN(value)) {
-                value = undefined;
-            }
-            return value;
-        };
         if (this._hostElement) {
             this.createContent(this._hostElement);
+            //            this.bindHandlers();
         }
+    }
+    /**
+     * Create Widget elements
+     * @param hostElement {DOM element}
+     */
+    createContent(hostElement) {
+        let inputElement = document.createElement("INPUT");
+        inputElement.type = 'text';
+        inputElement.placeholder = 'Number value';
+        inputElement.className = 'numeric-input';
+        inputElement.oninput = this.onTextChanged;
+        inputElement.onfocus = this.onFocus;
+        inputElement.onblur = this.onBlur;
+        this._inputElement = inputElement;
+        hostElement.appendChild(this._inputElement);
+    }
+    calcValue() {
+        if (this._inputElement.value.length === 0) {
+            return null;
+        }
+        let value = Number(this._inputElement.value);
+        if (Number.isNaN(value)) {
+            value = undefined;
+        }
+        return value;
     }
     /**
      * Widget read/write property

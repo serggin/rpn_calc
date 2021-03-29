@@ -1,13 +1,12 @@
 import { NumericInput, CalcInput } from "./custom-inputs/index.js";
-//import {FormulaGenerator} from "./FormulaGenerator.js";
 const buttons = [];
 const customInputs = [];
 try {
     let numInput = new NumericInput('numInput');
     customInputs.push(numInput);
     numInput.addEventListener('textChanged', function (text) {
-        //console.log('*** NumericInput In listener: text=', text);
-        //console.log('numInput .text, .value, .isValid = ', numInput.text, numInput.value, numInput.isValid);
+        console.log('*** NumericInput In listener: text=', text);
+        console.log('numInput .text, .value, .isValid = ', numInput.text, numInput.value, numInput.isValid);
         updateNodeText('numInputText', text);
     });
     numInput.addEventListener('valueChanged', function ({ value }) {
@@ -53,8 +52,8 @@ try {
     let calcInput = new CalcInput('calcInput');
     customInputs.push(calcInput);
     calcInput.addEventListener('textChanged', function (text) {
-        //console.log('*** CalcInput In listener: text=', text);
-        //console.log('calcInput .text, .value, .isValid = ', calcInput.text, calcInput.value, calcInput.isValid);
+        console.log('*** CalcInput In listener: text=', text);
+        console.log('calcInput .text, .value, .isValid = ', calcInput.text, calcInput.value, calcInput.isValid);
         updateNodeText('calcInputText', text);
     });
     calcInput.addEventListener('valueChanged', function ({ value }) {

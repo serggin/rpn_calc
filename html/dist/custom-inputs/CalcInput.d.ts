@@ -11,9 +11,13 @@ export declare class CalcInput extends BaseInput {
      * Create Widget elements
      * @param hostElement {DOM element}
      */
-    protected createContent: (hostElement: HTMLElement) => void;
+    protected createContent(hostElement: HTMLElement): void;
     protected getBorderedElement: () => HTMLElement;
-    protected calcValue: () => Value;
+    /**
+     * Parse the input text
+     */
+    protected parse(): void;
+    protected calcValue(): Value;
     private displayValue;
     /**
      * Widget read/write property

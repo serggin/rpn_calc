@@ -34,7 +34,7 @@ export declare abstract class BaseInput implements ICustomInput {
     /**
      * Parse the input text
      */
-    protected parse: () => void;
+    protected parse(): void;
     protected abstract calcValue(): Value;
     protected abstract getBorderedElement(): HTMLElement;
     protected updateBorderStyle: () => void;
@@ -57,6 +57,13 @@ export declare abstract class BaseInput implements ICustomInput {
      * @return {boolean}    true if entered text represents a valid number / expression
      */
     get isValid(): boolean;
+    /**
+     * Widget read/write property
+     *
+     * @return {number | null | undefined}     the evaluated result of the text entered to Widget
+     */
+    abstract get value(): Value;
+    abstract set value(val: Value);
     protected onTextChanged: () => void;
     protected onFocus: () => void;
     protected onBlur: () => void;
@@ -65,15 +72,15 @@ export declare abstract class BaseInput implements ICustomInput {
      * @param type {string}     type of the Event
      * @param listener {function(value)}    listener function
      */
-    addEventListener: (type: string, listener: Listener) => void;
+    addEventListener(type: string, listener: Listener): void;
     /**
      * Remove event listener
      * @param type {string}     type of the Event
      * @param listener {function(value)}    listener function
      */
-    removeEventListener: (type: string, listener: Listener) => void;
+    removeEventListener(type: string, listener: Listener): void;
     /**
      * Destroy Widget and Free resources
      */
-    destroy: () => void;
+    destroy(): void;
 }

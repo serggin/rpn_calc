@@ -15,26 +15,6 @@ export class BaseInput {
         this._value = null;
         this._inputElement = null;
         this._focused = false;
-        /**
-         * Parse the input text
-         */
-        this.parse = () => {
-            const oldIsValid = this.isValid;
-            const value = this.calcValue();
-            if (value !== this._value) {
-                this._value = value;
-                const event = new CustomEvent(BaseInput.VALUE_CHANGED, {
-                    detail: { value },
-                });
-                this._notifier.dispatch(event);
-            }
-            if (oldIsValid !== this.isValid) {
-                this._notifier.dispatch(new CustomEvent(BaseInput.IS_VALID_CHANGED, {
-                    detail: this.isValid,
-                }));
-            }
-            this.updateBorderStyle();
-        };
         this.updateBorderStyle = () => {
             let borderClass;
             if (this.isValid || this.text.length === 0) {
@@ -56,42 +36,14 @@ export class BaseInput {
             }));
         };
         this.onFocus = () => {
+            console.log('onFocus()', this);
+            console.log('onFocus()', this, this.getBorderedElement());
             this._focused = true;
             this.updateBorderStyle();
         };
         this.onBlur = () => {
             this._focused = false;
             this.updateBorderStyle();
-        };
-        /**
-         * Add event listener
-         * @param type {string}     type of the Event
-         * @param listener {function(value)}    listener function
-         */
-        this.addEventListener = (type, listener) => {
-            if (BaseInput.LISTENER_TYPES.indexOf(type) > -1) {
-                this._notifier.addEventListener(type, listener);
-            }
-        };
-        /**
-         * Remove event listener
-         * @param type {string}     type of the Event
-         * @param listener {function(value)}    listener function
-         */
-        this.removeEventListener = (type, listener) => {
-            if (BaseInput.LISTENER_TYPES.indexOf(type) > -1) {
-                this._notifier.removeEventListener(type, listener);
-            }
-        };
-        /**
-         * Destroy Widget and Free resources
-         */
-        this.destroy = () => {
-            this._notifier.destroy();
-            this._notifier = null;
-            while (this._hostElement && this._hostElement.firstChild) {
-                this._hostElement.removeChild(this._hostElement.firstChild);
-            }
         };
         if (typeof parent === 'string') {
             this._hostElement = document.getElementById(parent);
@@ -103,11 +55,32 @@ export class BaseInput {
             while (this._hostElement.firstChild) {
                 this._hostElement.removeChild(this._hostElement.firstChild);
             }
+            //            this.createContent(this._hostElement);
             this._notifier = new Notifier(BaseInput.LISTENER_TYPES);
         }
         else {
             throw new Error('Invalid parent');
         }
+    }
+    /**
+     * Parse the input text
+     */
+    parse() {
+        const oldIsValid = this.isValid;
+        const value = this.calcValue();
+        if (value !== this._value) {
+            this._value = value;
+            const event = new CustomEvent(BaseInput.VALUE_CHANGED, {
+                detail: { value },
+            });
+            this._notifier.dispatch(event);
+        }
+        if (oldIsValid !== this.isValid) {
+            this._notifier.dispatch(new CustomEvent(BaseInput.IS_VALID_CHANGED, {
+                detail: this.isValid,
+            }));
+        }
+        this.updateBorderStyle();
     }
     /**
      * Widget read/only property
@@ -126,8 +99,10 @@ export class BaseInput {
         return this._inputElement.value;
     }
     set text(val) {
-        this._inputElement.value = val;
-        this.onTextChanged();
+        if (val !== this.text) {
+            this._inputElement.value = val;
+            this.onTextChanged();
+        }
     }
     /**
      * Widget read/only property
@@ -136,6 +111,36 @@ export class BaseInput {
      */
     get isValid() {
         return this._value !== undefined && this._value !== null;
+    }
+    /**
+     * Add event listener
+     * @param type {string}     type of the Event
+     * @param listener {function(value)}    listener function
+     */
+    addEventListener(type, listener) {
+        if (BaseInput.LISTENER_TYPES.indexOf(type) > -1) {
+            this._notifier.addEventListener(type, listener);
+        }
+    }
+    /**
+     * Remove event listener
+     * @param type {string}     type of the Event
+     * @param listener {function(value)}    listener function
+     */
+    removeEventListener(type, listener) {
+        if (BaseInput.LISTENER_TYPES.indexOf(type) > -1) {
+            this._notifier.removeEventListener(type, listener);
+        }
+    }
+    /**
+     * Destroy Widget and Free resources
+     */
+    destroy() {
+        this._notifier.destroy();
+        this._notifier = null;
+        while (this._hostElement && this._hostElement.firstChild) {
+            this._hostElement.removeChild(this._hostElement.firstChild);
+        }
     }
 }
 /**

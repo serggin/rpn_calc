@@ -45,6 +45,7 @@ export abstract class BaseInput implements ICustomInput{
             while (this._hostElement.firstChild) {
                 this._hostElement.removeChild(this._hostElement.firstChild);
             }
+//            this.createContent(this._hostElement);
             this._notifier = new Notifier(BaseInput.LISTENER_TYPES);
         } else {
             throw new Error('Invalid parent');
@@ -56,7 +57,7 @@ export abstract class BaseInput implements ICustomInput{
     /**
      * Parse the input text
      */
-    protected parse = (): void => {
+    protected parse(): void {
         const oldIsValid = this.isValid;
         const value = this.calcValue();
         if (value !== this._value) {
@@ -110,8 +111,10 @@ export abstract class BaseInput implements ICustomInput{
         return this._inputElement!.value;
     }
     set text(val: string) {
-        this._inputElement!.value = val;
-        this.onTextChanged();
+        if (val !== this.text) {
+            this._inputElement!.value = val;
+            this.onTextChanged();
+        }
     }
 
     /**
@@ -123,6 +126,14 @@ export abstract class BaseInput implements ICustomInput{
         return this._value !== undefined && this._value !== null;
     }
 
+    /**
+     * Widget read/write property
+     *
+     * @return {number | null | undefined}     the evaluated result of the text entered to Widget
+     */
+    abstract get value(): Value;
+    abstract set value(val: Value);
+
     protected onTextChanged = (): void => {
         this.parse();
         this._notifier!.dispatch(new CustomEvent(BaseInput.TEXT_CHANGED, {
@@ -131,6 +142,8 @@ export abstract class BaseInput implements ICustomInput{
     }
 
     protected onFocus = (): void => {
+        console.log('onFocus()', this);
+        console.log('onFocus()', this, this.getBorderedElement());
         this._focused = true;
         this.updateBorderStyle();
     }
@@ -144,7 +157,7 @@ export abstract class BaseInput implements ICustomInput{
      * @param type {string}     type of the Event
      * @param listener {function(value)}    listener function
      */
-    addEventListener = (type: string, listener: Listener):void => {
+    addEventListener(type: string, listener: Listener):void {
         if (BaseInput.LISTENER_TYPES.indexOf(type) > -1) {
             this._notifier!.addEventListener(type, listener);
         }
@@ -155,7 +168,7 @@ export abstract class BaseInput implements ICustomInput{
      * @param type {string}     type of the Event
      * @param listener {function(value)}    listener function
      */
-    removeEventListener = (type: string, listener: Listener): void => {
+    removeEventListener(type: string, listener: Listener): void {
         if (BaseInput.LISTENER_TYPES.indexOf(type) > -1) {
             this._notifier!.removeEventListener(type, listener);
         }
@@ -164,7 +177,7 @@ export abstract class BaseInput implements ICustomInput{
     /**
      * Destroy Widget and Free resources
      */
-    destroy = (): void => {
+    destroy(): void {
         this._notifier!.destroy();
         this._notifier = null;
         while (this._hostElement && this._hostElement.firstChild) {

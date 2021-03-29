@@ -13,9 +13,9 @@ export declare class NumericInput extends BaseInput {
      * Create Widget elements
      * @param hostElement {DOM element}
      */
-    protected createContent: (hostElement: HTMLElement) => void;
+    protected createContent(hostElement: HTMLElement): void;
     protected getBorderedElement: () => HTMLElement;
-    protected calcValue: () => Value;
+    protected calcValue(): Value;
     /**
      * Widget read/write property
      *
